@@ -1,0 +1,11 @@
+parameters:
+  level: 8
+  paths:
+    - src
+
+  bootstrapFiles:
+    - bootstrap.php
+
+  excludePaths:
+    - src/Espo/EspoManager.php
+    - src/Espo/EspoManagerInterface.php

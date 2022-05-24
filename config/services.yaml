@@ -1,0 +1,45 @@
+parameters:
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  Dubas\Console\:
+    resource: '../src/*'
+    exclude: '../src/{Command,DependencyInjection,Application.php}'
+
+  Dubas\Console\Command\:
+    resource: '../src/Command/*'
+    tags:
+      - console.command
+
+  Dubas\Console\Application:
+    arguments:
+      - !tagged_iterator console.command
+    calls:
+      - ['setDispatcher', ['@event_dispatcher']]
+
+  Dubas\Console\EventListener\ConsoleEventListener:
+    tags:
+      - { name: kernel.event_listener, event: console.command }
+      - { name: kernel.event_listener, event: console.terminate }
+      - { name: kernel.event_listener, event: console.error }
+
+  event_dispatcher:
+    class: Symfony\Component\EventDispatcher\EventDispatcher
+
+  Symfony\Component\Filesystem\Filesystem: null
+  Symfony\Component\Console\Helper\HelperSet: null
+
+  Symplify\PackageBuilder\Console\Style\SymfonyStyleFactory: null
+  Symfony\Component\Console\Style\SymfonyStyle:
+    factory: ['@Symplify\PackageBuilder\Console\Style\SymfonyStyleFactory', 'create']
+
+  Symfony\Component\Finder\Finder:
+    factory: ['Symfony\Component\Finder\Finder', 'create']
+    shared: false
+
+  Jawira\CaseConverter\CaseConverter: null
+  Jawira\CaseConverter\CaseConverterInterface: '@Jawira\CaseConverter\CaseConverter'

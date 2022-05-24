@@ -1,0 +1,12 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use Dubas\Console\Application;
+
+$container = require dirname(__DIR__) . '/bootstrap.php';
+
+$application = $container->get(Application::class);
+
+exit($application->run());
