@@ -24,7 +24,7 @@ composer require --dev dubas/espo-console
 Via composer as a global dependency:
 
 ``` bash
-composer require global dubas/espo-console
+composer global require dubas/espo-console
 ```
 
 ## Running Commands
