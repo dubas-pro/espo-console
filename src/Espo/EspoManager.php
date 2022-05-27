@@ -42,7 +42,7 @@ class EspoManager implements EspoManagerInterface
             foreach ($entities as $entityData) {
                 $entityId = $entityData['id'] ?? null;
 
-                if (Attachment::ENTITY_TYPE === $entityName) {
+                if ('Attachment' === $entityName) {
                     $this->deleteAttachment($entityId);
                 }
 
