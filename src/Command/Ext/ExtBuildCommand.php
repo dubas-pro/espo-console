@@ -108,7 +108,7 @@ final class ExtBuildCommand extends Command
         $cmd->runCommand('ext:composer-install --no-dev --working-dir=' . $extensionTool->getTemporaryApplicationDirectory());
         $cmd->runCommand('ext:npm-install --working-dir=' . $extensionTool->getTemporaryClientDirectory());
 
-        $clean = $this->finder
+        $clean = $this->getNewFinderInstance()
             ->files()
             ->name($this->filesToIgnore)
             ->in($tempPath);
@@ -130,7 +130,7 @@ final class ExtBuildCommand extends Command
             return Command::FAILURE;
         }
 
-        $tempFileList = $this->finder
+        $tempFileList = $this->getNewFinderInstance()
             ->files()
             ->in($tempPath);
 
@@ -146,5 +146,10 @@ final class ExtBuildCommand extends Command
         $this->filesystem->remove($tempPath);
 
         return Command::SUCCESS;
+    }
+
+    private function getNewFinderInstance(): Finder
+    {
+        return $this->finder::create();
     }
 }
