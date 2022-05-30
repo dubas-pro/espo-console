@@ -47,16 +47,16 @@ class PathUtil
     /**
      * Ensures the given path is an absolute path.
      */
-    public function getAbsolutePath(string $workingDirectory, ?string $basePath = null): string
+    public function getAbsolutePath(string $path, ?string $basePath = null): string
     {
         $basePath = $basePath ?: WORKING_DIRECTORY;
 
-        $workingDirectory = Path::canonicalize($workingDirectory);
+        $path = Path::canonicalize($path);
 
-        if (Path::isRelative($workingDirectory)) {
-            $workingDirectory = Path::makeAbsolute($workingDirectory, $basePath);
+        if (Path::isRelative($path)) {
+            $path = Path::makeAbsolute($path, $basePath);
         }
 
-        return $workingDirectory;
+        return $path;
     }
 }
