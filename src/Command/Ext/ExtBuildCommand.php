@@ -37,7 +37,6 @@ final class ExtBuildCommand extends Command
         'package-lock.json',
         'pnpm-lock.yaml',
         'Gruntfile.js',
-        'node_modules',
     ];
 
     public function __construct(
@@ -107,6 +106,15 @@ final class ExtBuildCommand extends Command
 
         $cmd->runCommand('ext:composer-install --no-dev --working-dir=' . $extensionTool->getTemporaryApplicationDirectory());
         $cmd->runCommand('ext:npm-install --working-dir=' . $extensionTool->getTemporaryClientDirectory());
+
+        $buildIgnorePathList = $extensionData->buildIgnorePathList ?? [];
+        foreach ($buildIgnorePathList as $path) {
+            $path = $tempPath . '/files/' . $path;
+
+            if ($this->filesystem->exists($path)) {
+                $this->filesystem->remove($path);
+            }
+        }
 
         $clean = $this->getNewFinderInstance()
             ->files()
