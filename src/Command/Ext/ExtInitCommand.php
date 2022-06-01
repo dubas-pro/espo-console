@@ -52,6 +52,10 @@ final class ExtInitCommand extends Command
             return Command::FAILURE;
         }
 
+        if (0 !== $cmd->runCommand('ext:after-install', $output)) {
+            return Command::FAILURE;
+        }
+
         return $cmd->runCommand('admin:rebuild', $output);
     }
 }
