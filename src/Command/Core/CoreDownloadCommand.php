@@ -201,14 +201,14 @@ final class CoreDownloadCommand extends Command
             }
         }
 
-        if ($this->filesystem->exists($espocrmPackage . '/Gruntfile.js')) {
-            if (0 !== $cmd->runCommand('core:build --build=dev --instance=' . $espocrmPackage, $output)) {
-                return Command::FAILURE;
-            }
-        }
-
         if ($espocrmPackage) {
             $this->filesystem->mirror($espocrmPackage, $instancePath);
+        }
+
+        if ($this->filesystem->exists($espocrmPackage . '/Gruntfile.js')) {
+            if (0 !== $cmd->runCommand('core:build --build=dev --instance=' . $instancePath, $output)) {
+                return Command::FAILURE;
+            }
         }
 
         return Command::SUCCESS;
