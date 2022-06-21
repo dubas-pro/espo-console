@@ -25,8 +25,7 @@ class PathUtil
     public function getInstancePath(InputInterface $input): string
     {
         return $this->getAbsolutePath(
-            $input->getOption('instance'),
-            $this->getWorkingDirectory($input)
+            $input->getOption('instance')
         );
     }
 
