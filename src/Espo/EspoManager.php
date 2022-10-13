@@ -51,7 +51,17 @@ class EspoManager implements EspoManagerInterface
                     $entity = $this->getEntityManager()->getEntity($entityName);
                 }
 
+                $options = [
+                    'silent' => true,
+                ];
+
                 foreach ($entityData as $field => $value) {
+                    if ('createdById' === $field) {
+                        $options[$field] = $value;
+
+                        continue;
+                    }
+
                     if (in_array($entityName, ['EmailAccount', 'InboundEmail'], true)) {
                         if ('password' === $field) {
                             $value = $this->createCrypt()->encrypt($value);
@@ -70,9 +80,7 @@ class EspoManager implements EspoManagerInterface
                 }
 
                 try {
-                    $this->getEntityManager()->saveEntity($entity, [
-                        'silent' => true,
-                    ]);
+                    $this->getEntityManager()->saveEntity($entity, $options);
                 } catch (Exception $e) {
                     throw new Exception('Error importEntities: ' . $e->getMessage() . ', ' . print_r($entityData, true));
                 }
