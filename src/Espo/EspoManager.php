@@ -48,6 +48,19 @@ class EspoManager implements EspoManagerInterface
 
                 $entity = $this->getEntityManager()->getEntity($entityName, $entityId);
                 if (!$entity) {
+
+                    // In case entity is deleted,
+                    // but still exists in the database.
+                    $delete = $this->getEntityManager()
+                        ->getQueryBuilder()
+                        ->delete()
+                        ->from($entityName)
+                        ->where([
+                            'id' => $entityId,
+                        ])
+                        ->build();
+                    $this->getEntityManager()->getQueryExecutor()->execute($delete);
+
                     $entity = $this->getEntityManager()->getEntity($entityName);
                 }
 
@@ -58,8 +71,6 @@ class EspoManager implements EspoManagerInterface
                 foreach ($entityData as $field => $value) {
                     if ('createdById' === $field) {
                         $options[$field] = $value;
-
-                        continue;
                     }
 
                     if (in_array($entityName, ['EmailAccount', 'InboundEmail'], true)) {
