@@ -119,6 +119,7 @@ final class ExtBuildCommand extends Command
         $clean = $this->getNewFinderInstance()
             ->files()
             ->name($this->filesToIgnore)
+            ->ignoreDotFiles(false)
             ->in($tempPath);
 
         foreach ($clean as $file) {
@@ -140,6 +141,7 @@ final class ExtBuildCommand extends Command
 
         $tempFileList = $this->getNewFinderInstance()
             ->files()
+            ->ignoreDotFiles(false)
             ->in($tempPath);
 
         $zip = new ZipArchive();
