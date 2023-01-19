@@ -67,7 +67,7 @@ final class CoreDownloadCommand extends Command
     {
         if (
             !$input->getOption('no-interaction')
-            && !$this->symfonyStyle->confirm('Do you want to install EspoCRM?', false)
+            && !$this->symfonyStyle->confirm('This will remove any existing instance. Are you sure?', false)
         ) {
             $output->writeln(
                 sprintf('<error>%s</>', 'Aborted')
