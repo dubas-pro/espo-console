@@ -86,7 +86,7 @@ final class CoreBuildCommand extends Command
 
         $output->writeln('Building with Grunt...');
 
-        if (0 !== $this->runGruntCommand($instancePath, $input->getOption('build'), $output)) {
+        if (0 !== $this->runGruntCommand($instancePath, $output, $input->getOption('build'))) {
             return Command::FAILURE;
         }
 
@@ -97,7 +97,7 @@ final class CoreBuildCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function runGruntCommand(string $workingDirectory, ?string $gruntBuildType = null, OutputInterface $output): int
+    private function runGruntCommand(string $workingDirectory, OutputInterface $output, ?string $gruntBuildType = null): int
     {
         $gruntProcessCommand = ['grunt'];
 
