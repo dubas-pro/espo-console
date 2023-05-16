@@ -9,6 +9,7 @@ use Dubas\Console\Util\PathUtil;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Throwable;
 
 final class ConfigMergeCommand extends Command
 {
@@ -49,15 +50,20 @@ final class ConfigMergeCommand extends Command
         $config = $espoManager->getConfig();
         $configWriter = $espoManager->createConfigWriter();
 
-        foreach ($override as $key => $value) {
-            if (is_array($value) && $config->has($key)) { /** @phpstan-ignore-line */
-                $value = array_merge($value, $config->get($key)); /** @phpstan-ignore-line */
-            }
+        try {
+            $newConfig = $espoManager->merge($config->getAllNonInternalData(), $override);
+        } catch (Throwable $e) {
+            $output->writeln(
+                sprintf('<error>%s</>', $e->getMessage())
+            );
 
-            $configWriter->set($key, $value); /** @phpstan-ignore-line */
+            return Command::FAILURE;
         }
 
-        $configWriter->save(); /** @phpstan-ignore-line */
+        if ($newConfig) {
+            $configWriter->setMultiple((array) $newConfig);
+            $configWriter->save();
+        }
 
         return Command::SUCCESS;
     }

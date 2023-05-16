@@ -11,6 +11,7 @@ use Espo\Core\Utils\Config;
 use Espo\Core\Utils\Config\ConfigWriter;
 use Espo\Core\Utils\Crypt;
 use Espo\Core\Utils\PasswordHash;
+use Espo\Core\Utils\Util;
 use Espo\Entities\Attachment;
 use Exception;
 use RuntimeException;
@@ -34,6 +35,16 @@ class EspoManager implements EspoManagerInterface
     public function createConfigWriter(): ConfigWriter
     {
         return $this->getContainer()->get('injectableFactory')->create(ConfigWriter::class);
+    }
+
+    /**
+     * @param array<string, mixed>|stdClass $data
+     * @param array<string, mixed>|stdClass $overrideData
+     * @return array<string|int, mixed>|stdClass
+     */
+    public function merge($data, $overrideData)
+    {
+        return Util::merge($data, $overrideData);
     }
 
     public function importEntities(array $data = []): void

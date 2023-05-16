@@ -18,5 +18,7 @@ interface EspoManagerInterface
 
     public function createConfigWriter(): ConfigWriter;
 
+    public function merge($data, $overrideData);
+
     public function importEntities(array $data = []): void;
 }
