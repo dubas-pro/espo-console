@@ -6,6 +6,9 @@ parameters:
   bootstrapFiles:
     - bootstrap.php
 
+  scanDirectories:
+    - vendor/espocrm/espocrm/application
+
   excludePaths:
     - src/Espo/EspoManager.php
     - src/Espo/EspoManagerInterface.php
