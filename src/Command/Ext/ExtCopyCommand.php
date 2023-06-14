@@ -47,9 +47,14 @@ final class ExtCopyCommand extends Command
             ->sortByName();
 
         foreach ($moduleFinder as $module) {
-            $output->writeln('Removing ' . $workingDirectory . '/' . $module->getRelativePathname());
+            $path = $module->getRealPath();
 
-            $this->filesystem->remove($module->getRealPath());
+            if ($path === false) {
+                continue;
+            }
+
+            $output->writeln('Removing ' . $workingDirectory . '/' . $module->getRelativePathname());
+            $this->filesystem->remove($path);
         }
 
         $this->filesystem->mirror($workingDirectory . '/src/files', $instancePath);
