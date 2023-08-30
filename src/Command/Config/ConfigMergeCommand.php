@@ -39,7 +39,7 @@ final class ConfigMergeCommand extends Command
                 sprintf('<comment>%s</>', 'Nothing to merge. Skipping.')
             );
 
-            return Command::INVALID;
+            return Command::SUCCESS;
         }
 
         $override = include $configFile;
