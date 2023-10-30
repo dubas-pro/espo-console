@@ -54,6 +54,7 @@ final class CoreDownloadCommand extends Command
             Type <comment>full</comment> to download complete source files
             or <comment>release</comment> for pre-built package <info>(faster)</info>'
         ), $defaultType);
+        $this->addOption('build', '', InputOption::VALUE_NONE, 'Build EspoCRM instance after download');
         $this->addOption('install', 'i', InputOption::VALUE_NONE, 'Install EspoCRM instance after download');
         $this->addOption('no-cache', '', InputOption::VALUE_NONE, 'Disables the use of the cache directory');
     }
@@ -205,7 +206,7 @@ final class CoreDownloadCommand extends Command
             $this->filesystem->mirror($espocrmPackage, $instancePath);
         }
 
-        if ($this->filesystem->exists($espocrmPackage . '/Gruntfile.js')) {
+        if ($input->getOption('build') && $this->filesystem->exists($espocrmPackage . '/Gruntfile.js')) {
             if (0 !== $cmd->runCommand('core:build --build=dev --instance=' . $instancePath, $output)) {
                 return Command::FAILURE;
             }
