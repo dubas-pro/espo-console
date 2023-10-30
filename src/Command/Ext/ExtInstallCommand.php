@@ -75,11 +75,10 @@ final class ExtInstallCommand extends Command
         try {
             $process->mustRun();
         } catch (Exception $e) {
-            exit(
-                $this->symfonyStyle->writeln(
-                    sprintf('<error>%s</>', $e->getMessage())
-                )
+            $this->symfonyStyle->writeln(
+                sprintf('<error>%s</>', $e->getMessage())
             );
+            exit(1);
         }
 
         $this->symfonyStyle->writeln(
