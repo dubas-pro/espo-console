@@ -36,7 +36,7 @@
         "symplify/easy-coding-standard": "^10.2"
     },
     "scripts": {
-        "repo-as-fixtures": [
+        "post-install-cmd": [
             "rm -rf vendor/espocrm",
             "mkdir -p vendor/espocrm",
             "git clone --depth 1 --branch stable https://github.com/espocrm/espocrm.git vendor/espocrm/espocrm"
