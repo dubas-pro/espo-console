@@ -48,7 +48,7 @@ final class ConfigCreateCommand extends Command
                 sprintf('<comment>%s</>', 'Config already exists. Skipping.')
             );
 
-            return Command::INVALID;
+            return Command::SUCCESS;
         }
 
         $configFile = [
