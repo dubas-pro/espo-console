@@ -32,29 +32,12 @@ final class ExtInitCommand extends Command
     {
         $cmd = $this->commandRunnerTool->setApplication($this->getApplication());
 
-        if (0 !== $cmd->runCommand('core:download --no-interaction --install', $output)) {
-            return Command::FAILURE;
-        }
-
-        if (0 !== $cmd->runCommand('ext:install --working-dir=extensions/', $output)) {
-            return Command::FAILURE;
-        }
-
-        if (0 !== $cmd->runCommand('ext:composer-install', $output)) {
-            return Command::FAILURE;
-        }
-
-        if (0 !== $cmd->runCommand('ext:npm-install', $output)) {
-            return Command::FAILURE;
-        }
-
-        if (0 !== $cmd->runCommand('ext:copy', $output)) {
-            return Command::FAILURE;
-        }
-
-        if (0 !== $cmd->runCommand('ext:after-install', $output)) {
-            return Command::FAILURE;
-        }
+        $cmd->runCommand('core:download --no-interaction --install', $output);
+        $cmd->runCommand('ext:install --working-dir=extensions/', $output);
+        $cmd->runCommand('ext:composer-install', $output);
+        $cmd->runCommand('ext:npm-install', $output);
+        $cmd->runCommand('ext:copy', $output);
+        $cmd->runCommand('ext:after-install', $output);
 
         return $cmd->runCommand('admin:rebuild', $output);
     }
