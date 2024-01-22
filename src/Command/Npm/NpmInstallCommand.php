@@ -44,16 +44,21 @@ final class NpmInstallCommand extends Command
                 sprintf('<comment>%s</>', 'Could not find a package.json file in ' . $workingDirectory)
             );
 
-            return Command::INVALID;
+            return Command::SUCCESS;
         }
 
         if ($this->filesystem->exists($workingDirectory . '/node_modules')) {
             $this->filesystem->remove($workingDirectory . '/node_modules');
         }
 
+        $npmInstallCommand = 'ci';
+        if (!$this->filesystem->exists($workingDirectory . '/package-lock.json')) {
+            $npmInstallCommand = 'install';
+        }
+
         try {
             $this->process
-                ->execute(['npm', 'ci'])
+                ->execute(['npm', $npmInstallCommand])
                 ->setWorkingDirectory($workingDirectory)
                 ->disableOutput()
                 ->mustRun();
