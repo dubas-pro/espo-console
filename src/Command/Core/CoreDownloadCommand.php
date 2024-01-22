@@ -207,7 +207,7 @@ final class CoreDownloadCommand extends Command
         }
 
         if ($input->getOption('build') && $this->filesystem->exists($espocrmPackage . '/Gruntfile.js')) {
-            if (0 !== $cmd->runCommand('core:build --build=dev --instance=' . $instancePath, $output)) {
+            if (0 !== $cmd->runCommand('core:build --instance=' . $instancePath, $output)) {
                 return Command::FAILURE;
             }
         }
