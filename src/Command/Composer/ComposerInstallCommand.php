@@ -47,7 +47,7 @@ final class ComposerInstallCommand extends Command
                 sprintf('<comment>%s</>', 'Could not find a composer.json file in ' . $workingDirectory)
             );
 
-            return Command::INVALID;
+            return Command::SUCCESS;
         }
 
         if ($this->filesystem->exists($workingDirectory . '/vendor')) {

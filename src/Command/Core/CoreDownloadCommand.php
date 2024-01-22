@@ -74,7 +74,7 @@ final class CoreDownloadCommand extends Command
                 sprintf('<error>%s</>', 'Aborted')
             );
 
-            return Command::INVALID;
+            return Command::SUCCESS;
         }
 
         if (0 !== $this->doExecute($input, $output)) {
@@ -104,11 +104,11 @@ final class CoreDownloadCommand extends Command
 
         $methodName = 'processDownloadFor' . $downloadType;
 
-        if (method_exists($this, $methodName)) {
-            return $this->$methodName($input, $output);
+        if (!method_exists($this, $methodName)) {
+            return Command::FAILURE;
         }
 
-        return Command::INVALID;
+        return $this->$methodName($input, $output);
     }
 
     protected function afterExecute(InputInterface $input, OutputInterface $output): int

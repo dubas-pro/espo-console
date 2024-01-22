@@ -45,7 +45,7 @@ final class ExtRunScriptCommand extends Command
                 sprintf("<error>File '%s' does not exist.</>", $scriptFile)
             );
 
-            return Command::INVALID;
+            return Command::FAILURE;
         }
 
         include $scriptFile;

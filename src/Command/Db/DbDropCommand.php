@@ -43,7 +43,7 @@ final class DbDropCommand extends Command
                 sprintf('<error>%s</>', 'Aborted')
             );
 
-            return Command::INVALID;
+            return Command::SUCCESS;
         }
 
         $configData = $this->configUtil->getConfigData();

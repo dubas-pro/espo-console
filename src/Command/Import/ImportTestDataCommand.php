@@ -74,7 +74,7 @@ final class ImportTestDataCommand extends Command
                 sprintf('<comment>%s</>', 'Nothing to import. Skipping.')
             );
 
-            return Command::INVALID;
+            return Command::SUCCESS;
         }
 
         foreach ($fixtureList as $fixtures) {

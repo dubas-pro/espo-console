@@ -57,7 +57,7 @@ final class CoreBuildCommand extends Command
                 )
             );
 
-            return Command::INVALID;
+            return Command::SUCCESS;
         }
 
         $output->writeln('Installing node modules');
