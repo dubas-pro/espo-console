@@ -60,7 +60,7 @@ final class CoreBuildCommand extends Command
             return Command::SUCCESS;
         }
 
-        $output->writeln('Installing node modules');
+        $output->writeln('Installing node modules...');
 
         if (0 !== $cmd->runCommand('npm:install --quiet --working-dir=' . $instancePath)) {
             return Command::FAILURE;
