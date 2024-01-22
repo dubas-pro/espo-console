@@ -53,7 +53,7 @@ final class NpmInstallCommand extends Command
 
         try {
             $this->process
-                ->execute(['npm', 'install'])
+                ->execute(['npm', 'ci'])
                 ->setWorkingDirectory($workingDirectory)
                 ->disableOutput()
                 ->mustRun();
