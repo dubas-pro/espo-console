@@ -32,7 +32,9 @@ final class ExtInitCommand extends Command
     {
         $cmd = $this->commandRunnerTool->setApplication($this->getApplication());
 
-        $cmd->runCommand('core:download --no-interaction --install', $output);
+        $cmd->runCommand('core:download --no-interaction', $output);
+        $cmd->runCommand('core:build', $output);
+        $cmd->runCommand('core:install', $output);
         $cmd->runCommand('ext:install --working-dir=extensions/', $output);
         $cmd->runCommand('ext:composer-install', $output);
         $cmd->runCommand('ext:npm-install', $output);
