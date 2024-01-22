@@ -7,7 +7,6 @@ namespace Dubas\Console\Command\Core;
 use Dubas\Console\Filesystem\FilesystemInterface;
 use Dubas\Console\Process\ProcessInterface;
 use Dubas\Console\Tool\CommandRunnerTool;
-use Dubas\Console\Tool\NpmTool;
 use Dubas\Console\Util\PathUtil;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -29,7 +28,6 @@ final class CoreBuildCommand extends Command
         private PathUtil $pathUtil,
         private ProcessInterface $process,
         private FilesystemInterface $filesystem,
-        private NpmTool $npmTool,
         private CommandRunnerTool $commandRunnerTool
     ) {
         parent::__construct();
@@ -62,26 +60,10 @@ final class CoreBuildCommand extends Command
             return Command::INVALID;
         }
 
-        $packageManager = $this->npmTool->getPackageManagerType();
+        $output->writeln('Installing node modules');
 
-        $output->writeln('Installing node modules with ' . $packageManager);
-
-        if (0 !== $cmd->runCommand($packageManager . ':install --quiet --working-dir=' . $instancePath)) {
+        if (0 !== $cmd->runCommand('npm:install --quiet --working-dir=' . $instancePath)) {
             return Command::FAILURE;
-        }
-
-        if ($packageManager === 'pnpm') {
-            if ($this->npmTool->pnpmIsInstalled()) {
-                $output->writeln('Updating Gruntfile.js to use pnpm...');
-
-                $gruntfileJs = file_get_contents($gruntfileJsPath) ?: '';
-                $gruntfileJs = str_replace(
-                    'npm ci',
-                    'pnpm install --frozen-lockfile',
-                    $gruntfileJs
-                );
-                file_put_contents($gruntfileJsPath, $gruntfileJs);
-            }
         }
 
         $output->writeln('Building with Grunt...');

@@ -6,7 +6,6 @@ namespace Dubas\Console\Command\Ext;
 
 use Dubas\Console\Tool\CommandRunnerTool;
 use Dubas\Console\Tool\ExtensionTool;
-use Dubas\Console\Tool\NpmTool;
 use Dubas\Console\Util\PathUtil;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -25,7 +24,6 @@ final class ExtNpmInstallCommand extends Command
     public function __construct(
         private PathUtil $pathUtil,
         private ExtensionTool $extensionTool,
-        private NpmTool $npmTool,
         private CommandRunnerTool $commandRunnerTool
     ) {
         parent::__construct();
@@ -42,11 +40,7 @@ final class ExtNpmInstallCommand extends Command
             $workingDirectory = $clientDirectory;
         }
 
-        $packageManager = $this->npmTool
-            ->setWorkingDirectory($clientDirectory)
-            ->getPackageManagerType();
-
-        $command = $packageManager . ':install --quiet --working-dir=' . $workingDirectory;
+        $command = 'npm:install --quiet --working-dir=' . $workingDirectory;
 
         $exitCode = $this->commandRunnerTool
             ->setApplication($this->getApplication())
