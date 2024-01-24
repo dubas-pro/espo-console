@@ -33,8 +33,14 @@ final class AdminClearCacheCommand extends Command
     {
         $instancePath = $this->pathUtil->getInstancePath($input);
 
+        $command = ['php', 'clear_cache.php'];
+
+        if (file_exists($instancePath . '/bin/command')) {
+            $command = ['php', 'bin/command', 'clear-cache'];
+        }
+
         $process = $this->process
-            ->execute(['php', 'bin/command', 'clear-cache'])
+            ->execute($command)
             ->setWorkingDirectory($instancePath);
 
         try {

@@ -33,8 +33,14 @@ final class AdminRebuildCommand extends Command
     {
         $instancePath = $this->pathUtil->getInstancePath($input);
 
+        $command = ['php', 'rebuild.php'];
+
+        if (file_exists($instancePath . '/bin/command')) {
+            $command = ['php', 'bin/command', 'rebuild'];
+        }
+
         $process = $this->process
-            ->execute(['php', 'bin/command', 'rebuild'])
+            ->execute($command)
             ->setWorkingDirectory($instancePath);
 
         try {
