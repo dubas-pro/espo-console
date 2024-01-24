@@ -44,7 +44,7 @@ espo
 Which should get you something like:
 
 ```diff
-Dubas\Console 0.0.15
+Dubas\Console 0.0.16
 
 Usage:
   command [options] [arguments]

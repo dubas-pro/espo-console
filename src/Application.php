@@ -25,7 +25,7 @@ final class Application extends SymfonyApplication
     {
         $this->addCommands(iterator_to_array($commands));
 
-        parent::__construct(__NAMESPACE__, '0.0.15');
+        parent::__construct(__NAMESPACE__, '0.0.16');
     }
 
     /**
